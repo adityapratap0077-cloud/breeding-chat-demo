@@ -89,7 +89,11 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(400, json.dumps({"error": "bad JSON"}))
 
         result = retriever.retrieve(question)
-        if os.environ.get("DEMO_NO_LLM"):
+        if result["mode"] == "glossary":
+            # Background knowledge: deterministic, never via the LLM.
+            text = compose.compose(question, [], "glossary", result["note"],
+                                   result.get("glossary"))
+        elif os.environ.get("DEMO_NO_LLM"):
             # Hosting without the local AI gateway (e.g. Vercel): answer
             # deterministically from the retrieved rows.
             text = compose.compose(question, result["rows"],
