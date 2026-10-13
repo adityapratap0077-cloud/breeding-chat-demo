@@ -4,164 +4,170 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>Rice Breeding — Demo Query Assistant</title>
+<title>Rice Breeding — Trial Data Queries</title>
 <style>
   :root {
-    --paper:#f6f7f2; --card:#ffffff; --ink:#1d2a22; --muted:#5f6e62;
-    --accent:#2e6b3c; --accent-ink:#ffffff; --accent-soft:#e9f0e4;
-    --line:#dde3d4; --q-bg:#eef1e8;
-    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --paper:#f2f4ee; --card:#ffffff; --ink:#17251c; --muted:#647065;
+    --accent:#2c6b38; --accent-ink:#ffffff; --accent-soft:#e7efe2;
+    --line:#d8ded0; --q-bg:#e9ede1; --plot:rgba(44,107,56,.055);
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
-    --radius:10px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper:#131a15; --card:#1b241e; --ink:#e8ede6; --muted:#9aa79c;
-      --accent:#7cbf8a; --accent-ink:#10160f; --accent-soft:#223626;
-      --line:#2c3830; --q-bg:#243026;
+      --paper:#10160f; --card:#18211a; --ink:#e6ece3; --muted:#98a49a;
+      --accent:#82c48e; --accent-ink:#0e140d; --accent-soft:#1e2f22;
+      --line:#28332b; --q-bg:#202b21; --plot:rgba(130,196,142,.06);
     }
   }
   * { box-sizing:border-box; }
   html { -webkit-text-size-adjust:100%; }
-  body { margin:0; background:var(--paper); color:var(--ink);
-         font-family:var(--sans); line-height:1.6; }
-  .wrap { max-width:720px; margin:0 auto; padding:32px 20px 64px; }
+  body {
+    margin:0; color:var(--ink); font-family:var(--sans); line-height:1.6;
+    background-color:var(--paper);
+    background-image:
+      repeating-linear-gradient(0deg, var(--plot) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(90deg, var(--plot) 0 1px, transparent 1px 56px);
+  }
+  .wrap { max-width:760px; margin:0 auto; padding:22px 18px 56px; }
 
-  /* Masthead */
-  .kicker { font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
-            color:var(--accent); font-weight:600; margin:0 0 10px; }
-  header h1 { font-family:var(--serif); font-weight:600; font-size:2rem;
-              line-height:1.15; margin:0 0 8px; letter-spacing:-0.01em; }
-  .meta { color:var(--muted); font-size:.88rem; margin:0 0 0; }
-  .rule { border:0; border-top:1px solid var(--line); margin:20px 0; }
-  .rule.double { border-top:3px double var(--line); }
+  /* Instrument bar */
+  .bar { display:flex; justify-content:space-between; align-items:baseline;
+         gap:12px; padding:6px 2px 12px; border-bottom:2px solid var(--ink); }
+  .bar .title { font-weight:700; font-size:.98rem; letter-spacing:-0.01em; margin:0; }
+  .bar .title .thin { font-weight:400; color:var(--muted); }
+  .bar .spec { font-family:var(--mono); font-size:.72rem; color:var(--muted);
+               white-space:nowrap; }
 
-  /* Field note */
-  .note { border-left:3px solid var(--accent); background:var(--card);
-          border-radius:0 var(--radius) var(--radius) 0;
-          padding:12px 16px; font-size:.88rem; color:var(--ink);
-          margin:0 0 16px; }
-  .note strong { font-weight:650; }
-  .note .fine { color:var(--muted); font-size:.82rem; display:block; margin-top:6px; }
-  .note a { color:var(--accent); }
+  /* Scope strip */
+  .scope { display:flex; gap:10px; align-items:flex-start; margin:14px 0;
+           font-size:.85rem; }
+  .scope .tick { flex:none; width:10px; height:10px; margin-top:5px;
+                 background:var(--accent); }
+  .scope p { margin:0; }
+  .scope strong { font-weight:650; }
+  .scope .fine { color:var(--muted); font-size:.79rem; }
+  .scope a { color:var(--accent); }
 
-  /* Why disclosure */
-  details.why { border:1px solid var(--line); border-radius:var(--radius);
-                background:var(--card); padding:0; margin:0 0 20px; font-size:.87rem; }
-  details.why summary { cursor:pointer; padding:12px 16px; font-weight:600;
-                        color:var(--accent); list-style:none; }
-  details.why summary::-webkit-details-marker { display:none; }
-  details.why summary::before { content:"▸ "; }
-  details.why[open] summary::before { content:"▾ "; }
-  details.why .why-body { padding:0 16px 14px; color:var(--muted); }
-  details.why .why-body p { margin:0 0 10px; }
-  details.why .why-body p:last-child { margin-bottom:0; }
-  details.why strong { color:var(--ink); }
-
-  /* Chat thread */
-  #chat { background:var(--card); border:1px solid var(--line);
-          border-radius:var(--radius); padding:20px;
-          min-height:300px; max-height:56vh; overflow-y:auto; margin-bottom:14px; }
-  .msg { margin:0 0 16px; font-size:.95rem; max-width:100%; }
+  /* Query surface */
+  .panel { background:var(--card); border:1px solid var(--line);
+           border-radius:8px; overflow:hidden; }
+  #chat { padding:18px; min-height:320px; max-height:58vh; overflow-y:auto; }
+  .msg { margin:0 0 16px; font-size:.93rem; }
   .msg:last-child { margin-bottom:0; }
   @media (prefers-reduced-motion: no-preference) {
-    .msg { animation:rise .28s cubic-bezier(.16,1,.3,1); }
-    @keyframes rise { from { opacity:0; transform:translateY(6px); } }
+    .msg { animation:rise .25s cubic-bezier(.16,1,.3,1); }
+    @keyframes rise { from { opacity:0; transform:translateY(5px); } }
   }
   .msg.q { text-align:right; }
   .msg.q span { display:inline-block; background:var(--q-bg); color:var(--ink);
-                border-radius:14px; padding:9px 15px; max-width:88%; text-align:left;
-                font-size:.9rem; }
-  .msg.a .who { font-size:.72rem; color:var(--muted); text-transform:uppercase;
-                letter-spacing:.09em; margin-bottom:5px; font-weight:600; }
-  .msg.a .body { font-family:var(--serif); font-size:1.02rem; line-height:1.65; }
+                border-radius:12px; padding:8px 14px; max-width:88%;
+                text-align:left; font-size:.88rem; }
+  .msg.a .who { font-family:var(--mono); font-size:.7rem; color:var(--muted);
+                margin-bottom:4px; }
+  .msg.a .who::before { content:"▦ "; color:var(--accent); }
+  .msg.a .body { font-family:var(--serif); font-size:1rem; line-height:1.62; }
   .msg.a .rows { margin-top:10px; padding-top:8px; border-top:1px solid var(--line);
-                 font-size:.78rem; color:var(--muted); }
-  .msg.a .rows::before { content:"Sources cited — "; font-weight:600; color:var(--muted); }
-  .typing { color:var(--muted); font-style:italic; font-family:var(--sans); font-size:.88rem; }
+                 font-size:.76rem; color:var(--muted); font-family:var(--mono); }
+  .msg.a .rows::before { content:"sources: "; color:var(--muted); }
+  .typing { color:var(--muted); font-style:italic; font-size:.86rem; }
 
-  /* Chips */
-  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
-  .chip { border:1px solid var(--line); background:var(--card); border-radius:999px;
-          padding:7px 15px; font-size:.82rem; cursor:pointer; color:var(--accent);
-          font-family:var(--sans); transition:background .15s ease, transform .1s ease; }
-  .chip:hover { background:var(--accent-soft); }
+  /* Try row */
+  .try { border-top:1px solid var(--line); padding:12px 14px; }
+  .try .label { font-family:var(--mono); font-size:.7rem; color:var(--muted);
+                margin:0 0 8px; }
+  .chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .chip { border:1px solid var(--line); background:var(--paper);
+          border-radius:6px; padding:6px 12px; font-size:.79rem; cursor:pointer;
+          color:var(--ink); font-family:var(--sans);
+          transition:background .15s ease, transform .1s ease; }
+  .chip:hover { background:var(--accent-soft); border-color:var(--accent); }
   .chip:active { transform:scale(.97); }
 
   /* Ask row */
-  form.row { display:flex; gap:10px; }
-  input[type=text] { flex:1; min-width:0; padding:13px 16px; border:1px solid var(--line);
-                     border-radius:var(--radius); font-size:.95rem; font-family:var(--sans);
-                     background:var(--card); color:var(--ink); }
-  input[type=text]::placeholder { color:var(--muted); opacity:.85; }
-  input[type=text]:focus { outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
+  form.row { display:flex; gap:8px; padding:12px 14px; border-top:1px solid var(--line);
+             background:var(--card); }
+  input[type=text] { flex:1; min-width:0; padding:12px 14px;
+                     border:1px solid var(--line); border-radius:6px;
+                     font-size:.93rem; font-family:var(--sans);
+                     background:var(--paper); color:var(--ink); }
+  input[type=text]::placeholder { color:var(--muted); opacity:.9; }
+  input[type=text]:focus { outline:2px solid var(--accent); outline-offset:1px;
+                           border-color:var(--accent); }
   button#send { background:var(--accent); color:var(--accent-ink); border:0;
-                border-radius:var(--radius); padding:0 26px; font-size:.92rem;
-                font-weight:600; cursor:pointer; font-family:var(--sans);
-                transition:transform .1s ease, opacity .15s ease; white-space:nowrap; }
+                border-radius:6px; padding:0 24px; font-size:.9rem; font-weight:650;
+                cursor:pointer; font-family:var(--sans); white-space:nowrap;
+                transition:transform .1s ease, opacity .15s ease; }
   button#send:hover { opacity:.92; }
   button#send:active { transform:scale(.97); }
   button#send:disabled { opacity:.5; cursor:wait; transform:none; }
   button:focus-visible, .chip:focus-visible, summary:focus-visible {
     outline:2px solid var(--accent); outline-offset:2px; }
 
-  footer { margin-top:28px; font-size:.8rem; color:var(--muted); }
-  footer .rule { margin:0 0 14px; }
+  /* Footnote */
+  details.why { margin:14px 2px 0; font-size:.82rem; color:var(--muted); }
+  details.why summary { cursor:pointer; color:var(--accent); font-weight:600;
+                        list-style:none; }
+  details.why summary::-webkit-details-marker { display:none; }
+  details.why summary::before { content:"▸ "; }
+  details.why[open] summary::before { content:"▾ "; }
+  details.why .why-body { padding:8px 0 0; }
+  details.why .why-body p { margin:0 0 8px; }
+  details.why strong { color:var(--ink); }
+  .colophon { margin:18px 2px 0; font-family:var(--mono); font-size:.7rem;
+              color:var(--muted); }
 
   @media (max-width:520px) {
-    header h1 { font-size:1.6rem; }
-    #chat { padding:16px; max-height:60vh; }
+    .bar .spec { display:none; }
+    #chat { padding:14px; max-height:62vh; }
     button#send { padding:0 18px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <p class="kicker">Field demo &middot; Rice breeding trials</p>
-    <h1>Ask the trial data</h1>
-    <p class="meta">71 varieties &middot; Published IRRI, BRRI &amp; BINA trials &middot; Built as a student demo</p>
-  </header>
-  <hr class="rule double">
 
-  <div class="note">
-    <strong>Trained only on rice.</strong> This assistant can't answer questions
-    about anything except rice &mdash; wheat, other crops, and general topics are
-    outside what it knows.
-    <span class="fine">Answers are looked up in published trial tables, never generated.
-    Values come from different studies and seasons and are not strictly comparable.
-    No affiliation with IRRI, BRRI, BINA, or BRAC. <a href="/sources.html">Sources listed here</a>.</span>
+  <div class="bar">
+    <p class="title">Rice breeding trials <span class="thin">/ query instrument</span></p>
+    <p class="spec">71 varieties · IRRI / BRRI / BINA</p>
+  </div>
+
+  <div class="scope">
+    <span class="tick" aria-hidden="true"></span>
+    <p><strong>Trained only on rice.</strong> It can't answer questions about anything
+    except rice. <span class="fine">Answers are looked up in published trial tables, never
+    generated. Values come from different studies and seasons and are not strictly
+    comparable. Student demo, no affiliation with IRRI, BRRI, BINA, or BRAC.
+    <a href="/sources.html">Sources</a>.</span></p>
+  </div>
+
+  <div class="panel">
+    <div id="chat" role="log" aria-live="polite" aria-label="Conversation"></div>
+    <div class="try">
+      <p class="label">try</p>
+      <div class="chips" id="chips"></div>
+    </div>
+    <form class="row" id="form">
+      <input type="text" id="input" aria-label="Ask a question about rice varieties" placeholder="Ask about varieties, yields, salinity, Saltol&hellip;" autocomplete="off">
+      <button type="submit" id="send">Ask</button>
+    </form>
   </div>
 
   <details class="why">
     <summary>Why a curated dataset instead of just asking an AI?</summary>
     <div class="why-body">
-      <p>A general AI chatbot predicts plausible-sounding text. It can invent a
-      yield figure, a release year, or a QTL with complete confidence &mdash; and you
-      would never know. In breeding, a wrong number means wrong crosses and
-      wasted seasons.</p>
-      <p>This demo does the opposite: it <strong>looks up</strong> values in
-      published trial tables and shows the source behind every number. When the
-      data isn't in the tables, it says so instead of guessing. That
-      traceability is the whole point &mdash; an assistant a breeder can
-      <strong>check</strong>, not just chat with.</p>
+      <p>A general AI chatbot predicts plausible-sounding text. It can invent a yield
+      figure, a release year, or a QTL with complete confidence, and you would never
+      know. In breeding, a wrong number means wrong crosses and wasted seasons.</p>
+      <p>This demo does the opposite: it <strong>looks up</strong> values in published
+      trial tables and shows the source behind every number. When the data isn't in
+      the tables, it says so instead of guessing. That traceability is the whole
+      point: an assistant a breeder can <strong>check</strong>, not just chat with.</p>
     </div>
   </details>
 
-  <div id="chat" role="log" aria-live="polite" aria-label="Conversation"></div>
-
-  <div class="chips" id="chips"></div>
-
-  <form class="row" id="form">
-    <input type="text" id="input" aria-label="Ask a question about rice varieties" placeholder="Ask about varieties, yields, salinity tolerance, Saltol&hellip;" autocomplete="off">
-    <button type="submit" id="send">Ask</button>
-  </form>
-
-  <footer>
-    <hr class="rule">
-    Data: published trial tables (see sources). The assistant only answers from this dataset
-    and says so when a question falls outside it.
-  </footer>
+  <p class="colophon">demo · deterministic lookup · no llm in production</p>
 </div>
 
 <script src="/app.js"></script>
