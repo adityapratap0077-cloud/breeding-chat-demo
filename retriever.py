@@ -33,6 +33,31 @@ ALIASES = {
     "nonabokra": "Nona Bokra",
     "sr26b": "SR26B",
     "csr28": "CSR28",
+    # expansion batch (2026-10-13): 24 more published varieties
+    "brridhan97": "BRRI dhan97", "dhan97": "BRRI dhan97",
+    "brridhan99": "BRRI dhan99", "dhan99": "BRRI dhan99",
+    "brridhan112": "BRRI dhan112", "dhan112": "BRRI dhan112",
+    "csr10": "CSR10", "csr27": "CSR27", "csr36": "CSR36", "csr43": "CSR43",
+    "crdhan405": "CR Dhan 405 (Luna Sankhi)", "lunasankhi": "CR Dhan 405 (Luna Sankhi)",
+    "crdhan406": "CR Dhan 406 (Luna Barial)", "lunabarial": "CR Dhan 406 (Luna Barial)",
+    "ndrk5088": "NDRK 5088 (Narendra Usar Dhan)",
+    "narendrausardhan": "NDRK 5088 (Narendra Usar Dhan)",
+    "canning7": "Canning 7",
+    "lunishree": "Lunishree",
+    "salinas6": "Salinas 6 (NSIC Rc290)", "nsicrc290": "Salinas 6 (NSIC Rc290)",
+    "salinas7": "Salinas 7 (NSIC Rc292)", "nsicrc292": "Salinas 7 (NSIC Rc292)",
+    "salinas8": "Salinas 8 (NSIC Rc294)", "nsicrc294": "Salinas 8 (NSIC Rc294)",
+    "salinas9": "Salinas 9 (NSIC Rc296)", "nsicrc296": "Salinas 9 (NSIC Rc296)",
+    "salinas14": "Salinas 14",
+    "docphung": "Doc Phung",
+    "horkuch": "Horkuch",
+    "nongdan1": "Nông Dân 1", "nngdn1": "Nông Dân 1",
+    "pusa44saltol": "Pusa44-Saltol",
+    "sarjoo52saltol": "Sarjoo52-Saltol",
+    "dhan63kasp": "BRRI dhan63 (KASP salt-tolerant version)",
+    "brridhan63kasp": "BRRI dhan63 (KASP salt-tolerant version)",
+    "dhan67kasp": "BRRI dhan67 (KASP highly salt-tolerant version)",
+    "brridhan67kasp": "BRRI dhan67 (KASP highly salt-tolerant version)",
 }
 
 DOMAIN_WORDS = [
@@ -181,7 +206,8 @@ def retrieve(question):
     saline_context = any(w in q for w in ["under salinity", "in saline",
                                           "saline areas", "salt stress",
                                           "saline-prone"])
-    want_tolerant = (any(w in q for w in ["tolerant", "tolerance"]) or
+    want_tolerant = (any(w in q for w in ["tolerant", "tolerance", "tolerate",
+                                           "tolerates"]) or
                      saline_context) and \
         "not" not in q and "sensitive" not in q and "susceptible" not in q
     want_sensitive = any(w in q for w in ["sensitive", "susceptible", "not tolerant"])
@@ -194,6 +220,24 @@ def retrieve(question):
                 and "not" not in r.get("tolerance_class", "").lower()]
     elif want_sensitive:
         pool = [r for r in pool if "sensitive" in r.get("tolerance_class", "").lower()]
+
+    # Breeder/series filter: "which CSR / BRRI / Binadhan / Salinas varieties…"
+    dev = None
+    if "variet" in q:
+        if "csr" in q:
+            dev = "csr"
+        elif "binadhan" in q or "bina" in q:
+            dev = "binadhan"
+        elif "salinas" in q:
+            dev = "salinas"
+        elif "brri" in q:
+            dev = "brri"
+        elif "irri" in q:
+            dev = "irri"
+    if dev:
+        pool = [r for r in pool
+                if dev in r.get("variety", "").lower()
+                or dev in r.get("developer", "").lower()]
 
     # Numeric yield threshold. In a salinity context the threshold applies to
     # saline yield only — a variety with no saline data must not qualify via
@@ -229,7 +273,7 @@ def retrieve(question):
         return {"rows": pool[:8], "mode": "ranking",
                 "note": "ranked by reported yield (saline preferred)"}
 
-    if season or want_tolerant or want_sensitive or thr or sal:
+    if season or want_tolerant or want_sensitive or thr or sal or dev:
         return {"rows": pool[:10], "mode": "filtered",
                 "note": "filtered by season/tolerance/threshold"}
 
