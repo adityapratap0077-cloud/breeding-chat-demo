@@ -1,0 +1,1 @@
+{"env":{"DEMO_NO_LLM":"1"},"rewrites":[{"destination":"/api/index","source":"/(.*)"}]}
