@@ -88,6 +88,7 @@ const EXAMPLES = [
   "Compare Pokkali and FL478",
   "What is the Saltol QTL and which varieties carry it?",
   "Which aman-season varieties are salt tolerant, ranked by saline yield?",
+  "What does dS/m measure?",
   "What wheat varieties tolerate salinity?"
 ];
 
@@ -114,18 +115,24 @@ function esc(s) {
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
   const q = input.value.trim();
-  if (!q) return;
+  if (!q || sendBtn.disabled) return;
   input.value = '';
   addMsg('q', '<span>' + esc(q) + '</span>');
   const typing = addMsg('a', '<div class="who">Assistant</div><div class="typing">Looking up trial data…</div>');
   sendBtn.disabled = true;
+  const ctrl = new AbortController();
+  const timer = setTimeout(function () { ctrl.abort(); }, 30000);
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({question: q})
+      body: JSON.stringify({question: q}),
+      signal: ctrl.signal
     });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error('http ' + res.status);
     const data = await res.json();
+    if (!data.answer) throw new Error('bad response');
     let rowsHtml = '';
     if (data.rows_used && data.rows_used.length) {
       rowsHtml = '<div class="rows">Rows used: ' +
@@ -135,7 +142,11 @@ form.addEventListener('submit', async function (e) {
     typing.innerHTML = '<div class="who">Assistant</div><div class="body">' +
       esc(data.answer).replace(/\n/g, '<br>') + '</div>' + rowsHtml;
   } catch (err) {
-    typing.innerHTML = '<div class="who">Assistant</div><div class="body">Sorry — the server did not respond. Please try again.</div>';
+    clearTimeout(timer);
+    const msg = (err && err.name === 'AbortError')
+      ? 'The request timed out — the connection may be slow. Please try again.'
+      : 'Sorry — the server did not respond. Please try again.';
+    typing.innerHTML = '<div class="who">Assistant</div><div class="body">' + msg + '</div>';
   }
   sendBtn.disabled = false;
   chat.scrollTop = chat.scrollHeight;
