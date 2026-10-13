@@ -53,7 +53,9 @@ def _top_number(r):
     return None
 
 
-def compose(question, rows, mode, _note):
+def compose(question, rows, mode, _note, glossary_text=None):
+    if mode == "glossary":
+        return glossary_text or "No background entry found for that question."
     if mode == "empty" or not (question or "").strip():
         return ("Please ask a question about the rice varieties in the "
                 "demo dataset.")
