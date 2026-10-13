@@ -8,7 +8,7 @@ Dr. Arif (BRAC agricultural research center).
 
 Ask plain-language questions ("which aman varieties held yield above 4 t/ha
 under salinity?", "compare Pokkali and FL478", "what is the Saltol QTL?").
-The backend retrieves the relevant rows from a compiled dataset of 19 rice
+The backend retrieves the relevant rows from a compiled dataset of 43 rice
 varieties and an LLM composes a grounded answer **only from those rows** —
 it says plainly when the data does not cover a question.
 
@@ -45,7 +45,7 @@ If the gateway is down, the UI still shows the retrieved rows with a notice.
 - `llm.py` — grounded answering via the OmniRoute gateway (strict system
   prompt; model fallback chain; honors `retry_after`)
 - `static/index.html` — chat UI (example questions, sources link, disclaimers)
-- `data/breeding_trials.csv` — 19 varieties, real published numbers
+- `data/breeding_trials.csv` — 43 varieties, real published numbers
 - `SOURCES.md` — every source with title and URL
 - `test_questions.py` — the 5-question verification suite
 
