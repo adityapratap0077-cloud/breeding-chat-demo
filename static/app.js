@@ -55,7 +55,7 @@ form.addEventListener('submit', async function (e) {
     if (!data.answer) throw new Error('bad response');
     let rowsHtml = '';
     if (data.rows_used && data.rows_used.length) {
-      rowsHtml = '<div class="rows">Rows used: ' +
+      rowsHtml = '<div class="rows">' +
         data.rows_used.map(function (r) { return esc(r.variety); }).join(', ') +
         '</div>';
     }
