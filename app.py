@@ -42,6 +42,10 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
+        # Vercel serves this as /api/index with a rewrite; strip the prefix
+        # so the same routing works on Render/local and on Vercel.
+        if path == "/api/index" or path.startswith("/api/index/"):
+            path = path[len("/api/index"):] or "/"
         if path == "/":
             path = "/index.html"
         if path == "/sources":
@@ -67,7 +71,10 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(404, "not found", "text/plain")
 
     def do_POST(self):
-        if urlparse(self.path).path != "/api/chat":
+        path = urlparse(self.path).path
+        if path == "/api/index" or path.startswith("/api/index/"):
+            path = path[len("/api/index"):] or "/"
+        if path != "/api/chat":
             return self._send(404, "not found", "text/plain")
         try:
             length = int(self.headers.get("Content-Length", 0))
@@ -82,15 +89,20 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(400, json.dumps({"error": "bad JSON"}))
 
         result = retriever.retrieve(question)
-        try:
-            text = llm.answer(question, result["rows"], result["note"])
-        except RuntimeError:
-            # Self-contained fallback: deterministic answer from the rows.
-            # Used on public hosting where the local AI gateway is absent.
+        if os.environ.get("DEMO_NO_LLM"):
+            # Hosting without the local AI gateway (e.g. Vercel): answer
+            # deterministically from the retrieved rows.
             text = compose.compose(question, result["rows"],
                                    result["mode"], result["note"])
-            result["llm_error"] = True
-            result["mode"] = result["mode"] + "+composed"
+        else:
+            try:
+                text = llm.answer(question, result["rows"], result["note"])
+            except RuntimeError:
+                # Self-contained fallback: deterministic answer from rows.
+                text = compose.compose(question, result["rows"],
+                                       result["mode"], result["note"])
+                result["llm_error"] = True
+                result["mode"] = result["mode"] + "+composed"
 
         used = [{"variety": r["variety"],
                  "yield_saline_tha": r.get("yield_saline_tha", ""),
