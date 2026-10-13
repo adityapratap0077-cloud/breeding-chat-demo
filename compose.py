@@ -4,8 +4,6 @@ Used when the LLM gateway is unreachable (e.g. on public hosting). Every
 sentence is built from retrieved dataset rows only — no generation, no
 hallucination risk. A good fit for a scientific audience.
 """
-import re
-
 import retriever
 
 CAVEAT = ("Note: values come from different studies, seasons and trial "
@@ -55,7 +53,7 @@ def _top_number(r):
     return None
 
 
-def compose(question, rows, mode, note):
+def compose(question, rows, mode, _note):
     if mode == "empty" or not (question or "").strip():
         return ("Please ask a question about the rice varieties in the "
                 "demo dataset.")
