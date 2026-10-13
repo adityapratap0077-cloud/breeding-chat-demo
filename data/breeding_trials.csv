@@ -1,0 +1,20 @@
+variety,type,developer,country,release_year,season,duration_days,plant_height_cm,yield_normal_tha,yield_saline_tha,salinity_tolerance_dsm,tolerance_class,ses_score,key_qtl,notes,sources
+BRRI dhan47,released variety,BRRI,Bangladesh,2007,Boro,152,105,6.0,3-5 in saline-prone areas (IRRI); 5.5-6.0 reported by farmers in coastal boro,12-14 at seedling stage; 6 through whole life span,Tolerant,,,Cross IR 51511-B-34-B x TCCP 266-2-49-BB-3. Released January 2007 for coastal boro.,"S1,S2,S3,S15"
+BRRI dhan53,released variety,BRRI,Bangladesh,2010,Aman,125,106,4.5-5.0,"2.88 in saline-area trial (Kalapara, Patuakhali, T. Aman 2013)",8-10,Tolerant,,,Saline-trial mean 2.88 t/ha under nitrogen-management trial; official average yield 4.5 t/ha.,"S4,S5,S6"
+BRRI dhan54,released variety,BRRI,Bangladesh,2010,Aman,135,115,5.5,"4.30 in saline-area trial (Kalapara, Patuakhali, T. Aman 2013)",8-10,Tolerant,,,,"S4,S5,S6"
+BRRI dhan55,released variety,BRRI,Bangladesh,2011,Aus+Boro,145 (boro),100,7.0 (boro); 4.5 (aus),3-5 in saline-prone areas (IRRI),8-10,Tolerant,,,Also drought tolerant. Long fine grain.,"S1,S4,S7,S15"
+BRRI dhan61,released variety,BRRI,Bangladesh,2013,Aman,,,5.0,,,Tolerant,,,Salt-tolerant aman variety per BRRI; numeric salinity threshold not found in consulted sources.,S6
+BRRI dhan67,released variety,BRRI,Bangladesh,2014,Boro,140-150,100,3.8-7.4,,12-14 for 3 weeks at seedling; 8 from vegetative stage to harvest,Tolerant,,,,"S1,S7"
+BRRI dhan40,released variety,BRRI,Bangladesh,2003,Aman,,112,4.5,"4.53 in saline-area trial (Kalapara, Patuakhali, T. Aman 2013)",,Tolerant,,,,"S5,S6"
+BRRI dhan41,released variety,BRRI,Bangladesh,2003,Aman,,116,4.5,"4.36 in saline-area trial (Kalapara, Patuakhali, T. Aman 2013)",,Tolerant,,,,"S5,S6"
+BRRI dhan52,released variety,BRRI,Bangladesh,2010,Aman,,108,4.5,"4.17 in saline-area trial (Kalapara, Patuakhali, T. Aman 2013)",,Tolerant,,,Tested in saline-area trial.,"S5,S6"
+BRRI dhan28,released variety,BRRI,Bangladesh,1994,Boro,140,90,6.0,,below 4,Sensitive (not salt-tolerant),,,High-yielding boro check; widely grown but not salinity tolerant.,"S1,S7"
+Binadhan-8,released variety,BINA,Bangladesh,2010,Boro,130-135,,8.0 potential,5.5 under salt stress (BINA); 3-4 reported by farmers at 8-12 dS/m,12-14 at seedling; 8-10 to maturity,Tolerant,,,Semi-dwarf early-maturing medium bold grain. Widely grown in southern coastal Bangladesh.,"S4,S7,S9,S15"
+Binadhan-10,released variety,BINA,Bangladesh,2012,Boro (+Aman),127-132,,8.5 potential (7.5 average) non-saline,5-6 under salt stress (BINA),up to 12,Tolerant,,,Early maturing; medium long slender grain; low disease/pest incidence.,"S4,S7,S8,S15"
+Pokkali,landrace,traditional,India (Kerala),,,,,,,,Tolerant,4.38 at 8 dS/m (hydroponic),Saltol (donor),Classic tolerant donor landrace; not bred for yield so no yield figures listed. No numeric dS/m threshold found in consulted sources.,"S10,S11"
+FL478,breeding line (RIL),IRRI,Philippines,,,,,,,,Tolerant,2.93 at 6 dS/m; 5.62 at 9 dS/m,Saltol (chromosome 1),Recombinant inbred line from Pokkali x IR29; outperformed Pokkali at seedling stage in Kerala screening. No numeric dS/m threshold found in consulted sources.,"S11,S12"
+IR29,released variety (check),IRRI,Philippines,,,,,,,,Sensitive,9.0,,Standard susceptible check used in salinity screening worldwide. No numeric dS/m threshold found in consulted sources.,"S10,S13"
+IR64,released variety (mega-variety),IRRI,Philippines,1985,,,,6-7 potential,,,Sensitive,,,Widely grown mega-variety; not salt tolerant. No numeric dS/m threshold found in consulted sources.,S1
+Nona Bokra,landrace,traditional,India,,,,,,,,Tolerant,3.0,Saltol region,Tolerant donor landrace. No numeric dS/m threshold found in consulted sources.,S13
+SR26B,landrace,traditional,India (eastern coast),,,,,,,,Tolerant,,,Popular in coastal saline areas of eastern India. No numeric dS/m threshold found in consulted sources.,S14
+CSR28,breeding line (check),CSSRI,India,,,,,,,,Tolerant,3.7 (injury score),,Tolerant check in 231-line IRRI screening (2026). No numeric dS/m threshold found in consulted sources.,S11
