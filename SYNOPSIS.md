@@ -16,11 +16,24 @@ A conversational query layer: researchers ask plain-language questions and
 get answers with the actual numbers, drawn from the underlying data. No
 spreadsheet work, no manual cross-referencing.
 
+## Why a curated dataset, not just an AI chatbot
+
+A general AI chatbot predicts plausible-sounding text. Asked for a variety's
+saline yield or release year, it can invent a confident, wrong number — and
+the researcher has no way to know. In breeding, a wrong number means wrong
+crosses and wasted seasons.
+
+This demo inverts that: the language model never answers from its own
+knowledge. It only composes from rows retrieved out of published trial
+tables, cites the source behind every number, and says plainly when the
+dataset does not cover a question. Traceability is the design goal — an
+assistant a breeder can check, not just chat with.
+
 ## How it works
 
 The demo has three parts:
 
-1. **Compiled dataset.** 19 rice varieties (released BRRI and BINA
+1. **Compiled dataset.** 43 rice varieties (released BRRI and BINA
    salt-tolerant varieties, landrace donors such as Pokkali and Nona Bokra,
    breeding lines such as FL478, and standard checks such as IR29), with
    yields under saline and non-saline conditions, salinity thresholds, SES
