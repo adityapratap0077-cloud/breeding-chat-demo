@@ -65,8 +65,8 @@ def compose(question, rows, mode, _note, glossary_text=None):
                 "It does not cover that topic.")
     if not rows:
         return ("The demo dataset has no rows matching that question. It "
-                "covers 43 salt-tolerant rice varieties: released BRRI/BINA "
-                "varieties, landrace donors such as Pokkali and Nona Bokra, "
+                "covers 71 rice varieties: salt-tolerant lines, mega varieties, "
+                "basmatis and hybrids, landrace donors such as Pokkali and Nona Bokra, "
                 "breeding lines such as FL478, and checks such as IR29.")
     if mode == "named":
         lines = [_row_facts(r) for r in rows]
