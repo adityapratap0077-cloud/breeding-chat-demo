@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data sources — Salt-Tolerant Rice Demo</title>
+<style>
+  :root { --ink:#2b2b26; --muted:#6b6f66; --line:#e2e0d6; --bg:#faf9f5;
+          --card:#ffffff; --green:#3f6b4f; --greenbg:#eef4ee; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font-family:Georgia,'Times New Roman',serif; line-height:1.55; }
+  .wrap { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
+  header h1 { font-size:1.45rem; margin:0 0 4px; font-weight:600; }
+  header p.sub { color:var(--muted); margin:0 0 14px; font-size:.95rem; }
+  .back { display:inline-block; margin-bottom:16px; font-size:.85rem; color:var(--green);
+          font-family:-apple-system,'Segoe UI',sans-serif; text-decoration:none; }
+  .back:hover { text-decoration:underline; }
+  .intro { background:var(--card); border:1px solid var(--line); border-radius:10px;
+           padding:14px 18px; font-size:.9rem; margin-bottom:18px; }
+  .src { background:var(--card); border:1px solid var(--line); border-radius:10px;
+         padding:14px 18px; margin-bottom:12px; }
+  .src .key { display:inline-block; background:var(--greenbg); color:var(--green);
+              font-family:-apple-system,'Segoe UI',sans-serif; font-size:.75rem;
+              font-weight:700; border-radius:6px; padding:2px 8px; margin-bottom:6px; }
+  .src h2 { font-size:1rem; margin:0 0 4px; font-weight:600; }
+  .src h2 a { color:var(--ink); text-decoration:none; }
+  .src h2 a:hover { color:var(--green); text-decoration:underline; }
+  .src .meta { font-size:.8rem; color:var(--muted); margin-bottom:6px;
+               font-family:-apple-system,'Segoe UI',sans-serif; }
+  .src p.desc { font-size:.9rem; margin:0 0 8px; }
+  .src .link a { font-size:.82rem; color:var(--green);
+                 font-family:-apple-system,'Segoe UI',sans-serif;
+                 text-decoration:none; word-break:break-all; }
+  .src .link a:hover { text-decoration:underline; }
+  .src .nolink { font-size:.82rem; color:var(--muted);
+                 font-family:-apple-system,'Segoe UI',sans-serif; font-style:italic; }
+  .notes { margin-top:22px; font-size:.85rem; color:var(--muted); }
+  .notes h2 { font-size:1rem; color:var(--ink); }
+  .notes ul { padding-left:20px; }
+  footer { margin-top:26px; font-size:.8rem; color:var(--muted);
+           font-family:-apple-system,'Segoe UI',sans-serif; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Data sources</h1>
+    <p class="sub">Every number in the demo dataset comes from one of these published sources. Each dataset row cites its source key.</p>
+  </header>
+  <a class="back" href="/">&larr; Back to the demo</a>
+
+  <div class="intro">
+    Only published, checkable sources are used. Numbers are facts extracted from
+    these publications (not copied text). Where a value was not found in any
+    consulted source, the dataset cell is left blank.
+  </div>
+
+  <div class="src">
+    <span class="key">S1</span>
+    <h2><a href="https://onlinelibrary.wiley.com/doi/10.1155/ioa/9525700" target="_blank" rel="noopener">Performances of Six Rice Varieties in Coastal Saline Soil of Bangladesh</a></h2>
+    <div class="meta">Wiley, 2025</div>
+    <p class="desc">Characteristics table for BRRI dhan28, dhan47 and dhan67: duration, plant height, yield and salinity thresholds.</p>
+    <div class="link"><a href="https://onlinelibrary.wiley.com/doi/10.1155/ioa/9525700" target="_blank" rel="noopener">onlinelibrary.wiley.com &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S2</span>
+    <h2><a href="https://www.thedailystar.net/news-detail-74553" target="_blank" rel="noopener">Hope beyond salinity</a></h2>
+    <div class="meta">The Daily Star, 2009</div>
+    <p class="desc">BRRI dhan47 release (January 2007): 6.0&ndash;6.5 t/ha potential, 6 dS/m tolerance at flowering.</p>
+    <div class="link"><a href="https://www.thedailystar.net/news-detail-74553" target="_blank" rel="noopener">thedailystar.net &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S3</span>
+    <h2><a href="https://journalajahr.com/index.php/AJAHR/article/download/322/632/508" target="_blank" rel="noopener">BRRI dhan47 parentage and performance study</a></h2>
+    <div class="meta">Asian Journal of Agricultural and Horticultural Research</div>
+    <p class="desc">BRRI dhan47 parentage (IR 51511-B-34-B &times; TCCP 266-2-49-BB-3), 152-day duration, about 6.1 t/ha mean yield.</p>
+    <div class="link"><a href="https://journalajahr.com/index.php/AJAHR/article/download/322/632/508" target="_blank" rel="noopener">journalajahr.com &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S4</span>
+    <h2><a href="https://www.slideshare.net/slideshow/saltt-rice/51015397" target="_blank" rel="noopener">SaltT Rice &mdash; BINA presentation</a></h2>
+    <div class="meta">Mirza Mofazzal Islam, BINA (via SlideShare)</div>
+    <p class="desc">Released-variety fact sheets: Binadhan-8 and Binadhan-10, BRRI dhan47, dhan53, dhan54 and dhan55 &mdash; season, duration, height, salinity thresholds and yields.</p>
+    <div class="link"><a href="https://www.slideshare.net/slideshow/saltt-rice/51015397" target="_blank" rel="noopener">slideshare.net &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S5</span>
+    <h2><a href="https://banglajol.info/index.php/BRJ/article/download/37387/25311" target="_blank" rel="noopener">Saline-area trial yields, Kalapara (Ali et al.)</a></h2>
+    <div class="meta">Bangladesh Rice Journal (via BanglaJOL)</div>
+    <p class="desc">Saline-area trial yields at Kalapara, Patuakhali, T. Aman 2013: BRRI dhan40 4.53, dhan41 4.36, dhan53 2.88, dhan54 4.30, dhan52 4.17 t/ha.</p>
+    <div class="link"><a href="https://banglajol.info/index.php/BRJ/article/download/37387/25311" target="_blank" rel="noopener">banglajol.info &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S6</span>
+    <h2><a href="https://dhcrop.bsmrau.net/varieties-released/varieties-released-by-brri/" target="_blank" rel="noopener">BRRI released-varieties register</a></h2>
+    <div class="meta">Digital Herbarium of Crop Plants, BSMRAU</div>
+    <p class="desc">Release years, seasons and average yields: dhan47 (2007/6.0), dhan53 (2010/4.5), dhan54 (2010/5.5), dhan55 (2011/7.0), dhan61 (2013/5.0), dhan40/41 (2003/4.5), dhan52 (2010/4.5).</p>
+    <div class="link"><a href="https://dhcrop.bsmrau.net/varieties-released/varieties-released-by-brri/" target="_blank" rel="noopener">dhcrop.bsmrau.net &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S7</span>
+    <h2><a href="https://www.scirp.org/journal/paperabs?paperid=81491" target="_blank" rel="noopener">Competitiveness of Winter Rice Varieties against Weed under Dry Direct Seeded Conditions</a></h2>
+    <div class="meta">SCIRP</div>
+    <p class="desc">Variety table with BRRI dhan47, dhan55, dhan67 and Binadhan-8/10: release year, height, duration, yield and salt-tolerance flag.</p>
+    <div class="link"><a href="https://www.scirp.org/journal/paperabs?paperid=81491" target="_blank" rel="noopener">scirp.org &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S8</span>
+    <h2><a href="http://bina.portal.gov.bd/sites/default/files/files/bina.portal.gov.bd/page/2fe324dc_6d39_455c_b522_15175672b318/Rice%20varieties%20-17.04.2016.pdf" target="_blank" rel="noopener">BINA rice varieties fact sheet</a></h2>
+    <div class="meta">bina.portal.gov.bd</div>
+    <p class="desc">Binadhan-10: released 2012, tolerates up to 12 dS/m, 5&ndash;6 t/ha under salt stress, 8.5 t/ha potential in non-saline conditions.</p>
+    <div class="link"><a href="http://bina.portal.gov.bd/sites/default/files/files/bina.portal.gov.bd/page/2fe324dc_6d39_455c_b522_15175672b318/Rice%20varieties%20-17.04.2016.pdf" target="_blank" rel="noopener">bina.portal.gov.bd (PDF) &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S9</span>
+    <h2>BINA Biotechnology Division document</h2>
+    <div class="meta">BINA office document</div>
+    <p class="desc">Binadhan-8: released 2010, 12&ndash;14 dS/m at seedling stage / 8&ndash;10 to maturity, 5.5 t/ha under salt stress, 8.0 t/ha potential in non-saline conditions.</p>
+    <div class="nolink">Internal BINA document &mdash; no public link available</div>
+  </div>
+
+  <div class="src">
+    <span class="key">S10</span>
+    <h2><a href="https://www.academia.edu/113952181/Evaluation_for_Salt_Tolerance_in_Rice_Using_Multiple_Screening_Methods" target="_blank" rel="noopener">Evaluation for Salt Tolerance in Rice Using Multiple Screening Methods (Kranto et al.)</a></h2>
+    <div class="meta">Journal of Agricultural Science and Technology (via Academia.edu)</div>
+    <p class="desc">Hydroponic SES scores at 8 dS/m: Pokkali 4.38 (tolerant), IR29 9.00 (susceptible).</p>
+    <div class="link"><a href="https://www.academia.edu/113952181/Evaluation_for_Salt_Tolerance_in_Rice_Using_Multiple_Screening_Methods" target="_blank" rel="noopener">academia.edu &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S11</span>
+    <h2><a href="https://bioengineer.org/scientists-screen-231-rice-lines-to-find-hidden-salt-tolerance-beyond-the-famous-saltol-gene/" target="_blank" rel="noopener">IRRI 231-line salinity screening (2026)</a></h2>
+    <div class="meta">via bioengineer.org</div>
+    <p class="desc">Tolerant checks CSR28 (3.7), FL478, Pokkali (injury below 4.5); Saltol QTL on chromosome 1 from Pokkali regulates Na+/K+ homeostasis.</p>
+    <div class="link"><a href="https://bioengineer.org/scientists-screen-231-rice-lines-to-find-hidden-salt-tolerance-beyond-the-famous-saltol-gene/" target="_blank" rel="noopener">bioengineer.org &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S12</span>
+    <h2><a href="https://www.thepharmajournal.com/archives/2022/vol11issue12/PartAN/11-12-334-357.pdf" target="_blank" rel="noopener">FL478 vs Pokkali salinity screening, Kerala</a></h2>
+    <div class="meta">The Pharma Innovation Journal, 2022</div>
+    <p class="desc">Polyhouse screening: FL478 SES 2.93 at 6 dS/m &mdash; outperformed Pokkali at seedling stage.</p>
+    <div class="link"><a href="https://www.thepharmajournal.com/archives/2022/vol11issue12/PartAN/11-12-334-357.pdf" target="_blank" rel="noopener">thepharmajournal.com (PDF) &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S13</span>
+    <h2><a href="http://www.knowledgebank.irri.org/ricebreedingcourse/documents/Screening_manual.pdf" target="_blank" rel="noopener">IRRI screening manual (Discussion Paper No. 22)</a></h2>
+    <div class="meta">knowledgebank.irri.org</div>
+    <p class="desc">SES reference table: Nona Bokra 3.0 (tolerant), IR29 7.0.</p>
+    <div class="link"><a href="http://www.knowledgebank.irri.org/ricebreedingcourse/documents/Screening_manual.pdf" target="_blank" rel="noopener">knowledgebank.irri.org (PDF) &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S14</span>
+    <h2><a href="https://real.mtak.hu/37152/1/crc.2014.0045.pdf" target="_blank" rel="noopener">Coastal saline rice in eastern India</a></h2>
+    <div class="meta">Cereal Research Communications (via real.mtak.hu)</div>
+    <p class="desc">SR26B noted as the most popular variety in coastal saline areas of eastern India.</p>
+    <div class="link"><a href="https://real.mtak.hu/37152/1/crc.2014.0045.pdf" target="_blank" rel="noopener">real.mtak.hu (PDF) &nearr;</a></div>
+  </div>
+
+  <div class="src">
+    <span class="key">S15</span>
+    <h2><a href="https://ricetoday.irri.org/a-successful-salt-tolerant-rice-variety-in-sreefalkathi-village/" target="_blank" rel="noopener">A successful salt-tolerant rice variety in Sreefalkathi Village</a></h2>
+    <div class="meta">Rice Today, IRRI</div>
+    <p class="desc">IRRI&ndash;BRRI&ndash;BINA boro varieties (BRRI dhan47, BRRI dhan55, Binadhan-8, Binadhan-10): 5&ndash;7 t/ha non-saline, 3&ndash;5 t/ha in saline-prone areas; survive up to 10 dS/m.</p>
+    <div class="link"><a href="https://ricetoday.irri.org/a-successful-salt-tolerant-rice-variety-in-sreefalkathi-village/" target="_blank" rel="noopener">ricetoday.irri.org &nearr;</a></div>
+  </div>
+
+  <div class="notes">
+    <h2>Compilation notes</h2>
+    <ul>
+      <li>This is a demo dataset, not a research database. Values come from different studies, seasons and trial conditions and are not directly comparable row-to-row.</li>
+      <li>Blank cells mean &ldquo;not found in the consulted sources&rdquo;, never zero.</li>
+      <li>Yield figures mix official potential yields, on-farm reports and single-trial means &mdash; the source and context travel with each number.</li>
+      <li>No affiliation with IRRI, BRRI, BINA or BRAC is claimed anywhere.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Built as a student demo by Aditya Pratap.
+  </footer>
+</div>
+</body>
+</html>
