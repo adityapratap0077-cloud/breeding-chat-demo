@@ -109,7 +109,7 @@ def main():
         port = int(sys.argv[sys.argv.index("--port") + 1])
     if not port:
         port = 8471
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    server = ThreadingHTTPServer(("0.0.0.0", port), Handler)
     print("breeding-chat-demo on http://127.0.0.1:%d/  (Ctrl+C to stop)" % port,
           flush=True)
     server.serve_forever()
