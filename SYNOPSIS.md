@@ -39,11 +39,11 @@ The demo has three parts:
 
 ## Current status
 
-A working demo is running: a simple chat interface over the compiled
-dataset, verified with ranking, comparison, threshold, marker, and
-out-of-scope questions. It is a demonstration on published data, built by a
-final-year B.Sc. Biotechnology student, and claims no affiliation with IRRI,
-BRRI, BINA, or BRAC.
+A working demo is live: a simple chat interface over the compiled dataset,
+verified with ranking, comparison, threshold, marker, and out-of-scope
+questions — https://breeding-chat-demo.onrender.com. It is a demonstration
+on published data, built by a final-year B.Sc. Biotechnology student, and
+claims no affiliation with IRRI, BRRI, BINA, or BRAC.
 
 ## The ask
 
@@ -52,8 +52,6 @@ real program data rather than published tables. What would help:
 
 - The typical format of your marker and trial data (file types, columns,
   approximate size), so the demo can be rebuilt around your actual workflow.
-- A short video call to walk through a working demo on your data shape and
-  judge whether it is worth pursuing further.
 
 Contact: Aditya Pratap, final-year B.Sc. (Hons) Biotechnology,
 Bundelkhand University, India.
