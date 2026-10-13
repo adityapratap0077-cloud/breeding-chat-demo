@@ -123,6 +123,54 @@ ENTRIES = [
      "knowledge, not trial data.",
      True),
 
+    (("salinity",),
+     "Salinity means how much salt is dissolved in soil or water. A little "
+     "is natural, but too much salt makes it hard for rice roots to absorb "
+     "water and slowly poisons the leaves. Farmers measure it in dS/m — "
+     "most rice struggles above 3–4 dS/m. This is background knowledge, "
+     "not trial data.",
+     True),
+
+    (("what is rice", "what is paddy", "define rice", "rice meaning",
+      "about rice", "about paddy"),
+     "Rice (Oryza sativa) is the staple food for more than half the world's "
+     "people. 'Paddy' usually means rice still in its husk, or rice growing "
+     "in a flooded field. This demo covers salt-tolerant rice varieties "
+     "from published trials. This is background knowledge, not trial data.",
+     True),
+
+    (("what is a variety", "what is variety", "what are varieties",
+      "cultivar", "define variety", "variety meaning"),
+     "A variety (or cultivar) is a named, uniform line of a crop bred for "
+     "specific traits — like BRRI dhan47, bred for salt tolerance. Farmers "
+     "pick varieties suited to their soil, season and climate. This is "
+     "background knowledge, not trial data.",
+     True),
+
+    (("what is a gene", "what is gene", "what is dna", "define gene",
+      "gene meaning", "genome"),
+     "A gene is a section of DNA carrying instructions for one trait, like "
+     "grain size or salt tolerance. Rice has around 40,000 genes. Breeders "
+     "track useful genes — such as Saltol — using DNA markers. This is "
+     "background knowledge, not trial data.",
+     True),
+
+    (("what is breeding", "plant breeding", "define breeding",
+      "breeding meaning"),
+     "Plant breeding is selecting and crossing plants over generations to "
+     "combine useful traits — for example, crossing a high-yielding variety "
+     "with a salt-tolerant landrace. Modern breeders also use DNA markers "
+     "to pick the right seedlings in the lab. This is background knowledge, "
+     "not trial data.",
+     True),
+
+    (("germination",),
+     "Germination is when a seed sprouts and starts growing. In salinity "
+     "screening, seeds are germinated in salty water to see which lines "
+     "survive — a quick first test before field trials. This is background "
+     "knowledge, not trial data.",
+     True),
+
     (("screening", "hydroponic", "field trial", "tested"),
      "Salinity tolerance is screened two main ways: hydroponic screening "
      "(seedlings grown in nutrient solution with added salt, scored by SES) "
@@ -140,6 +188,27 @@ ENTRIES = [
      "studies are not directly comparable. This is background knowledge, "
      "not trial data.",
      True),
+
+    (("hello", " hi ", " hey ", "greetings", "namaste", "good morning",
+      "good afternoon", "good evening", "bye", "goodbye"),
+     "Hello! Ask me about salt-tolerant rice varieties — which ones hold "
+     "yield under salinity, how Pokkali compares to FL478, or what the "
+     "Saltol marker is. I can also explain basics like dS/m, the SES score, "
+     "or rice-growing seasons.",
+     False),
+
+    (("thank you", "thanks", "thankyou", "shukriya", "dhanyavad"),
+     "You're welcome! Ask anytime — basic or advanced, I'm here for rice "
+     "breeding questions.",
+     False),
+
+    (("who built", "who made", "who created", "your creator",
+      "aditya pratap"),
+     "I was built by Aditya Pratap, a final-year B.Sc. Biotechnology student "
+     "at Bundelkhand University, India, as a demo of conversational search "
+     "over published breeding-trial data. No affiliation with IRRI, BRRI, "
+     "BINA or BRAC.",
+     False),
 ]
 
 
