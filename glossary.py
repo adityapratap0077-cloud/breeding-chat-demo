@@ -209,6 +209,19 @@ ENTRIES = [
      "over published breeding-trial data. No affiliation with IRRI, BRRI, "
      "BINA or BRAC.",
      False),
+
+    (("why not", "why a dataset", "why this demo", "why this approach",
+      "just an ai", "just ask an ai", "hallucinat", "invent numbers",
+      "invent data", "make up numbers", "make up data", "why curated",
+      "curated dataset"),
+     "A general AI predicts plausible-sounding text — it can invent a yield "
+     "figure or a release year with complete confidence, and you'd never "
+     "know. In breeding, a wrong number means wrong crosses and wasted "
+     "seasons. So this demo looks up values in published trial tables and "
+     "shows the source behind every number, and says so when the data "
+     "isn't there. Traceability is the whole point: an assistant a breeder "
+     "can check, not just chat with.",
+     False),
 ]
 
 
