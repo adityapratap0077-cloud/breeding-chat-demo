@@ -64,12 +64,12 @@ form.addEventListener('submit', async function (e) {
   } catch (err) {
     clearTimeout(timer);
     const msg = (err && err.name === 'AbortError')
-      ? 'The request timed out — the connection may be slow. Please try again.'
-      : 'Sorry — the server did not respond. Please try again.';
+      ? 'The request timed out. The connection may be slow. Please try again.'
+      : 'Sorry, the server did not respond. Please try again.';
     typing.innerHTML = '<div class="who">Assistant</div><div class="body">' + msg + '</div>';
   }
   sendBtn.disabled = false;
   chat.scrollTop = chat.scrollHeight;
 });
 
-addMsg('a', '<div class="who">Assistant</div><div class="body">Ask me about salt-tolerant rice varieties — for example, which ones hold yield under salinity, how Pokkali compares to FL478, or what the Saltol marker is.</div>');
+addMsg('a', '<div class="who">Assistant</div><div class="body">Ask me about salt-tolerant rice varieties: for example, which ones hold yield under salinity, how Pokkali compares to FL478, or what the Saltol marker is.</div>');
