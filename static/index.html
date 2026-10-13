@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Salt-Tolerant Rice Breeding — Demo Query Assistant</title>
+<title>Rice Breeding — Demo Query Assistant</title>
 <style>
   :root { --ink:#2b2b26; --muted:#6b6f66; --line:#e2e0d6; --bg:#faf9f5;
           --card:#ffffff; --green:#3f6b4f; --greenbg:#eef4ee; }
@@ -45,14 +45,19 @@
   button:disabled { opacity:.5; cursor:wait; }
   footer { margin-top:26px; font-size:.8rem; color:var(--muted);
            font-family:-apple-system,'Segoe UI',sans-serif; }
+  .why { border:1px solid var(--line); border-radius:8px; background:var(--card);
+         padding:10px 14px; margin-bottom:18px; font-size:.85rem;
+         font-family:-apple-system,'Segoe UI',sans-serif; color:#3c4a3e; }
+  .why summary { cursor:pointer; font-weight:600; color:var(--green); }
+  .why p { margin:8px 0 0; }
   .typing { color:var(--muted); font-style:italic; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Salt-Tolerant Rice Breeding — Demo Query Assistant</h1>
-    <p class="sub">Ask plain-language questions over published trial data for salt-tolerant rice varieties.</p>
+    <h1>Rice Breeding — Demo Query Assistant</h1>
+    <p class="sub">Ask plain-language questions over published trial data for rice varieties.</p>
   </header>
 
   <div class="notice">
@@ -61,6 +66,19 @@
     Values come from different studies and seasons and are not strictly comparable.
     Built as a student demo — no affiliation with IRRI, BRRI, BINA, or BRAC.
   </div>
+
+  <details class="why">
+    <summary>Why a curated dataset instead of just asking an AI?</summary>
+    <p>A general AI chatbot predicts plausible-sounding text. It can invent a
+    yield figure, a release year, or a QTL with complete confidence — and you
+    would never know. In breeding, a wrong number means wrong crosses and
+    wasted seasons.</p>
+    <p>This demo does the opposite: it <strong>looks up</strong> values in
+    published trial tables and shows the source behind every number. When the
+    data isn't in the tables, it says so instead of guessing. That
+    traceability is the whole point — an assistant a breeder can
+    <strong>check</strong>, not just chat with.</p>
+  </details>
 
   <div id="chat"></div>
 
