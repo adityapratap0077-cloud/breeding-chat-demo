@@ -8,6 +8,8 @@ import csv
 import os
 import re
 
+import glossary
+
 DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "breeding_trials.csv")
 
 # Aliases: normalized token -> canonical variety name as in the CSV.
@@ -138,7 +140,16 @@ def retrieve(question):
                 "mode": "named", "note": "varieties named in question"}
 
     # Saltol / marker questions -> rows carrying QTL info + checks.
+    # A pure "what is" question gets the background explanation instead.
     if any(w in q for w in ["saltol", "qtl", "marker", "chromosome", "gene"]):
+        if q.strip().startswith(("what is", "what are", "what was",
+                                 "what does", "explain", "why",
+                                 "how does", "how do")) and \
+                not any(w in q for w in ["which", "carr", "list", "variet"]):
+            g = glossary.lookup(question)
+            if g:
+                return {"rows": [], "mode": "glossary",
+                        "note": "background knowledge", "glossary": g}
         marked = [r for r in rows if r.get("key_qtl", "").strip()]
         checks = [by_name[n] for n in ["IR29"] if n in by_name]
         seen = set()
@@ -149,6 +160,14 @@ def retrieve(question):
                 out.append(r)
         return {"rows": out, "mode": "marker",
                 "note": "rows carrying Saltol/QTL information"}
+
+    # Background / definitional questions -> glossary. Sits after named and
+    # marker handling so data questions always win; definitional_only flags
+    # inside the glossary keep it from hijacking filtered queries.
+    g = glossary.lookup(question)
+    if g:
+        return {"rows": [], "mode": "glossary",
+                "note": "background knowledge", "glossary": g}
 
     # Season filter.
     season = None
