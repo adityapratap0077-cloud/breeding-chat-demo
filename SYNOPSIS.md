@@ -33,13 +33,15 @@ assistant a breeder can check, not just chat with.
 
 The demo has three parts:
 
-1. **Compiled dataset.** 43 rice varieties (released BRRI and BINA
-   salt-tolerant varieties, landrace donors such as Pokkali and Nona Bokra,
-   breeding lines such as FL478, and standard checks such as IR29), with
-   yields under saline and non-saline conditions, salinity thresholds, SES
-   scores, and Saltol marker information. Every value is taken from published
-   IRRI, BRRI, and BINA trial tables; each row cites its source. Blank cells
-   mean the value was not found in the consulted sources.
+1. **Compiled dataset.** 71 rice varieties: salt-tolerant BRRI and BINA
+   releases, landrace donors such as Pokkali and Nona Bokra, breeding lines
+   such as FL478, standard checks such as IR29 — plus mega-varieties
+   (Swarna, Samba Mahsuri, IR36), basmatis (Pusa Basmati 1121 and others)
+   and hybrids. Each row carries yields, salinity thresholds where
+   published, SES scores, and Saltol marker information. Every value is
+   taken from published IRRI, BRRI, BINA, ICAR and PAU trial tables; each
+   row cites its source. Blank cells mean the value was not found in the
+   consulted sources.
 2. **Deterministic retrieval.** A question is parsed for variety names, yield
    thresholds, seasons, tolerance classes, and marker terms, and the matching
    rows are pulled from the dataset. No guessing.
