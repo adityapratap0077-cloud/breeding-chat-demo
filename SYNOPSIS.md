@@ -41,7 +41,7 @@ The demo has three parts:
 
 A working demo is live: a simple chat interface over the compiled dataset,
 verified with ranking, comparison, threshold, marker, and out-of-scope
-questions — https://breeding-chat-demo.onrender.com. It is a demonstration
+questions — https://breeding-chat-demo.vercel.app. It is a demonstration
 on published data, built by a final-year B.Sc. Biotechnology student, and
 claims no affiliation with IRRI, BRRI, BINA, or BRAC.
 
