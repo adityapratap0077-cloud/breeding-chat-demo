@@ -60,9 +60,8 @@ def compose(question, rows, mode, _note, glossary_text=None):
         return ("Please ask a question about the rice varieties in the "
                 "demo dataset.")
     if mode == "out_of_scope":
-        return ("This demo only covers salt-tolerant rice varieties — yields, "
-                "salinity thresholds, SES screening scores and Saltol marker "
-                "information from published IRRI, BRRI and BINA trials. "
+        return ("This demo covers rice — varieties, yields, salinity, "
+                "breeding, and background topics from published trials. "
                 "It does not cover that topic.")
     if not rows:
         return ("The demo dataset has no rows matching that question. It "
@@ -96,8 +95,8 @@ def compose(question, rows, mode, _note, glossary_text=None):
     intro = {"ranking": "Ranked by reported yield (saline preferred):",
              "filtered": "Varieties matching your filters:",
              "general": ("The dataset doesn't hold that exact detail — it "
-                         "covers salt-tolerant rice varieties (yields, "
-                         "salinity thresholds, SES scores, Saltol info). "
+                         "covers rice varieties (yields, salinity thresholds, "
+                         "SES scores, Saltol info) plus background topics. "
                          "Here are the tolerant varieties:")}.get(
                  mode, "Matching varieties:")
     return intro + "\n" + "\n".join(lines) + "\n" + CAVEAT
