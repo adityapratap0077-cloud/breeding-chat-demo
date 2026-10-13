@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salt-Tolerant Rice Breeding — Demo Query Assistant</title>
+<style>
+  :root { --ink:#2b2b26; --muted:#6b6f66; --line:#e2e0d6; --bg:#faf9f5;
+          --card:#ffffff; --green:#3f6b4f; --greenbg:#eef4ee; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font-family:Georgia,'Times New Roman',serif; line-height:1.55; }
+  .wrap { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
+  header h1 { font-size:1.45rem; margin:0 0 4px; font-weight:600; }
+  header p.sub { color:var(--muted); margin:0 0 14px; font-size:.95rem; }
+  .notice { background:var(--greenbg); border:1px solid #cfdccf; border-radius:8px;
+            padding:10px 14px; font-size:.85rem; color:#3c4a3e; margin-bottom:18px;
+            font-family:-apple-system,'Segoe UI',sans-serif; }
+  .notice a { color:var(--green); }
+  #chat { background:var(--card); border:1px solid var(--line); border-radius:10px;
+          padding:18px; min-height:280px; max-height:52vh; overflow-y:auto;
+          margin-bottom:12px; }
+  .msg { margin:0 0 14px; font-size:.95rem; }
+  .msg.q { text-align:right; }
+  .msg.q span { display:inline-block; background:#eef0ea; border-radius:12px;
+                padding:8px 14px; max-width:85%; text-align:left;
+                font-family:-apple-system,'Segoe UI',sans-serif; font-size:.9rem; }
+  .msg.a div.body { background:var(--card); }
+  .msg.a .who { font-size:.75rem; color:var(--muted); text-transform:uppercase;
+                letter-spacing:.06em; margin-bottom:4px;
+                font-family:-apple-system,'Segoe UI',sans-serif; }
+  .msg.a .rows { margin-top:8px; font-size:.78rem; color:var(--muted);
+                 font-family:-apple-system,'Segoe UI',sans-serif; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .chip { border:1px solid var(--line); background:var(--card); border-radius:20px;
+          padding:6px 14px; font-size:.82rem; cursor:pointer; color:var(--green);
+          font-family:-apple-system,'Segoe UI',sans-serif; }
+  .chip:hover { background:var(--greenbg); }
+  form.row { display:flex; gap:8px; }
+  input[type=text] { flex:1; padding:11px 14px; border:1px solid var(--line);
+                     border-radius:8px; font-size:.95rem; font-family:inherit; }
+  button { background:var(--green); color:#fff; border:0; border-radius:8px;
+           padding:0 22px; font-size:.9rem; cursor:pointer;
+           font-family:-apple-system,'Segoe UI',sans-serif; }
+  button:disabled { opacity:.5; cursor:wait; }
+  footer { margin-top:26px; font-size:.8rem; color:var(--muted);
+           font-family:-apple-system,'Segoe UI',sans-serif; }
+  .typing { color:var(--muted); font-style:italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Salt-Tolerant Rice Breeding — Demo Query Assistant</h1>
+    <p class="sub">Ask plain-language questions over published trial data for salt-tolerant rice varieties.</p>
+  </header>
+
+  <div class="notice">
+    <strong>Demo, not a database.</strong> Answers come from 19 varieties compiled
+    from published IRRI, BRRI, and BINA trials (<a href="/sources" target="_blank">sources listed here</a>).
+    Values come from different studies and seasons and are not strictly comparable.
+    Built as a student demo — no affiliation with IRRI, BRRI, BINA, or BRAC.
+  </div>
+
+  <div id="chat"></div>
+
+  <div class="chips" id="chips"></div>
+
+  <form class="row" id="form">
+    <input type="text" id="input" placeholder="Ask about varieties, yields, salinity tolerance, Saltol…" autocomplete="off">
+    <button type="submit" id="send">Ask</button>
+  </form>
+
+  <footer>
+    Data: published trial tables (see sources). The assistant only answers from this dataset
+    and says so when a question falls outside it.
+  </footer>
+</div>
+
+<script>
+const chat = document.getElementById('chat');
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const sendBtn = document.getElementById('send');
+
+const EXAMPLES = [
+  "Which varieties held yield above 4 t/ha under salinity in boro season?",
+  "Compare Pokkali and FL478",
+  "What is the Saltol QTL and which varieties carry it?",
+  "Which aman-season varieties are salt tolerant, ranked by saline yield?",
+  "What wheat varieties tolerate salinity?"
+];
+
+const chipsBox = document.getElementById('chips');
+EXAMPLES.forEach(function (q) {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.textContent = q;
+  b.onclick = function () { input.value = q; form.requestSubmit(); };
+  chipsBox.appendChild(b);
+});
+
+function addMsg(cls, html) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + cls;
+  d.innerHTML = html;
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+  return d;
+}
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  addMsg('q', '<span>' + esc(q) + '</span>');
+  const typing = addMsg('a', '<div class="who">Assistant</div><div class="typing">Looking up trial data…</div>');
+  sendBtn.disabled = true;
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({question: q})
+    });
+    const data = await res.json();
+    let rowsHtml = '';
+    if (data.rows_used && data.rows_used.length) {
+      rowsHtml = '<div class="rows">Rows used: ' +
+        data.rows_used.map(function (r) { return esc(r.variety); }).join(', ') +
+        '</div>';
+    }
+    typing.innerHTML = '<div class="who">Assistant</div><div class="body">' +
+      esc(data.answer).replace(/\n/g, '<br>') + '</div>' + rowsHtml;
+  } catch (err) {
+    typing.innerHTML = '<div class="who">Assistant</div><div class="body">Sorry — the server did not respond. Please try again.</div>';
+  }
+  sendBtn.disabled = false;
+  chat.scrollTop = chat.scrollHeight;
+});
+
+addMsg('a', '<div class="who">Assistant</div><div class="body">Ask me about salt-tolerant rice varieties — for example, which ones hold yield under salinity, how Pokkali compares to FL478, or what the Saltol marker is.</div>');
+</script>
+</body>
+</html>
