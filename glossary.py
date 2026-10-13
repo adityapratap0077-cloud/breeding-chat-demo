@@ -189,6 +189,21 @@ ENTRIES = [
      "not trial data.",
      True),
 
+    (("types of rice", "kinds of rice", "type of rice", "rice types",
+      "different rices", "indica", "japonica", "aromatic rice", "basmati",
+      "glutinous", "sticky rice"),
+     "Rice comes in a few broad types. The two cultivated species are Oryza "
+     "sativa (Asian rice — almost everything grown) and Oryza glaberrima "
+     "(African rice). Within sativa, the big split is indica — long, "
+     "non-sticky grains grown across South and Southeast Asia — and japonica "
+     "— shorter, stickier grains grown in East Asia and temperate regions. "
+     "By grain shape you get long, medium and short grain; by special traits, "
+     "aromatic rices like basmati and jasmine, glutinous (sticky) rice, and "
+     "pigmented types like black or red rice. Upland rice grows without "
+     "flooding; lowland (paddy) rice grows in standing water. This is "
+     "background knowledge, not trial data.",
+     True),
+
     (("hello", " hi ", " hey ", "greetings", "namaste", "good morning",
       "good afternoon", "good evening", "bye", "goodbye"),
      "Hello! Ask me about salt-tolerant rice varieties — which ones hold "
