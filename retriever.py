@@ -58,6 +58,36 @@ ALIASES = {
     "brridhan63kasp": "BRRI dhan63 (KASP salt-tolerant version)",
     "dhan67kasp": "BRRI dhan67 (KASP highly salt-tolerant version)",
     "brridhan67kasp": "BRRI dhan67 (KASP highly salt-tolerant version)",
+    # general-rice batch (2026-10-13): mega varieties, basmatis, hybrids
+    "ir8": "IR8",
+    "ir36": "IR36",
+    "jaya": "Jaya",
+    "swarna": "Swarna (MTU7029)", "mtu7029": "Swarna (MTU7029)",
+    "sambamahsuri": "Samba Mahsuri (BPT5204)", "bpt5204": "Samba Mahsuri (BPT5204)",
+    "improvedsambamahsuri": "Improved Samba Mahsuri",
+    "pusabasmati1": "Pusa Basmati 1",
+    "pusabasmati1121": "Pusa Basmati 1121",
+    "pusabasmati1509": "Pusa Basmati 1509",
+    "pusa44": "Pusa 44",
+    "pr126": "PR 126",
+    "adt43": "ADT 43",
+    "co51": "CO 51",
+    "drrdhan45": "DRR Dhan 45", "dhan45": "DRR Dhan 45",
+    "crdhan310": "CR Dhan 310", "dhan310": "CR Dhan 310",
+    "rajendrasweta": "Rajendra Sweta",
+    "saryu52": "Saryu 52",
+    "pantdhan12": "Pant Dhan 12",
+    "govind": "Govind",
+    "saket4": "Saket 4",
+    "mahamaya": "Mahamaya",
+    "mtu1001": "MTU 1001 (Vijetha)", "vijetha": "MTU 1001 (Vijetha)",
+    "mtu1010": "MTU 1010 (Cottondora Sannalu)",
+    "cottondorasannalu": "MTU 1010 (Cottondora Sannalu)",
+    "pusarh10": "Pusa RH 10", "rh10": "Pusa RH 10",
+    "krh2": "KRH 2",
+    "pa6444": "PA 6444", "arize6444": "PA 6444",
+    "phb71": "PHB 71",
+    "pa6201": "PA 6201",
 }
 
 DOMAIN_WORDS = [
@@ -65,7 +95,7 @@ DOMAIN_WORDS = [
     "tolerance", "ses", "qtl", "marker", "boro", "aman", "aus", "dhan",
     "breeding", "trial", "paddy", "dsm", "hectare", "t/ha", "landrace",
     "pokkali", "fl478", "ir29", "ir64", "binadhan", "brri", "bina", "irri",
-    "check", "donor", "chromosome",
+    "check", "donor", "chromosome", "basmati", "hybrid",
 ]
 
 OUT_OF_SCOPE_CROPS = ["wheat", "maize", "corn", "barley", "soybean", "cotton",
@@ -112,8 +142,26 @@ def load_rows():
 def _mentioned_varieties(question, alias_map):
     q = _norm(question)
     found = []
+    taken = []  # (start, end) spans already claimed by a longer token
     for token, name in sorted(alias_map.items(), key=lambda kv: -len(kv[0])):
-        if token in q and name not in found:
+        if name in found:
+            continue
+        # accept if any occurrence lies outside already-claimed spans
+        # (e.g. "pusa44" inside "pusa44saltol" is skipped, but a separate
+        # "pusa44" elsewhere in the question still counts)
+        start = 0
+        accepted = False
+        while True:
+            i = q.find(token, start)
+            if i < 0:
+                break
+            span = (i, i + len(token))
+            if not any(s <= span[0] and span[1] <= e for s, e in taken):
+                taken.append(span)
+                accepted = True
+                break
+            start = i + 1
+        if accepted:
             found.append(name)
     return found
 
@@ -221,9 +269,11 @@ def retrieve(question):
     elif want_sensitive:
         pool = [r for r in pool if "sensitive" in r.get("tolerance_class", "").lower()]
 
-    # Breeder/series filter: "which CSR / BRRI / Binadhan / Salinas varieties…"
+    # Breeder/series filter: "which CSR / BRRI / Binadhan / Salinas /
+    # basmati / hybrid varieties…"
     dev = None
-    if "variet" in q:
+    series = None
+    if "variet" in q or "which" in q:
         if "csr" in q:
             dev = "csr"
         elif "binadhan" in q or "bina" in q:
@@ -234,10 +284,20 @@ def retrieve(question):
             dev = "brri"
         elif "irri" in q:
             dev = "irri"
+        elif "basmati" in q:
+            series = "basmati"
+        elif "hybrid" in q:
+            series = "hybrid"
     if dev:
         pool = [r for r in pool
                 if dev in r.get("variety", "").lower()
                 or dev in r.get("developer", "").lower()]
+    if series == "basmati":
+        pool = [r for r in pool if "basmati" in r.get("variety", "").lower()]
+    elif series == "hybrid":
+        pool = [r for r in pool
+                if "hybrid" in r.get("variety_type", "").lower()
+                or "hybrid" in r.get("notes", "").lower()]
 
     # Numeric yield threshold. In a salinity context the threshold applies to
     # saline yield only — a variety with no saline data must not qualify via
@@ -273,7 +333,7 @@ def retrieve(question):
         return {"rows": pool[:8], "mode": "ranking",
                 "note": "ranked by reported yield (saline preferred)"}
 
-    if season or want_tolerant or want_sensitive or thr or sal or dev:
+    if season or want_tolerant or want_sensitive or thr or sal or dev or series:
         return {"rows": pool[:10], "mode": "filtered",
                 "note": "filtered by season/tolerance/threshold"}
 
